@@ -36,23 +36,26 @@ public class Student {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    // Student has one Result
+    @OneToOne(
+            mappedBy = "student",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Result result;
+
     public Student() {
     }
 
-    // Automatically called before INSERT
     @PrePersist
     protected void onCreate() {
-
         LocalDateTime now = LocalDateTime.now();
-
         createdAt = now;
         updatedAt = now;
     }
 
-    // Automatically called before UPDATE
     @PreUpdate
     protected void onUpdate() {
-
         updatedAt = LocalDateTime.now();
     }
 
@@ -136,5 +139,13 @@ public class Student {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
     }
 }
